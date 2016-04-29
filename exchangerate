@@ -1,10 +1,16 @@
+#Tammy Joseph
+#CSE 4251
+#This program is to convert a given currency amount into major currencies around the world
+#These currencies include Euro, Yen, Pounds, Canadian Dollar, and USD.
+
 #!/bin/sh
 
 # exchangerate - given a currency amount, convert it into other major 
 #   currencies and show the equivalent amounts in each.
 
-# ref URL: http://www.ny.frb.org/pihome/statistics/forex12.shtml
+# ref URL: http://money.cnn.com/markets/currencies/
 
+#display showrate() by dollar amount followed by cents
 showrate()
 {
   dollars="$(echo $1 | cut -d. -f1)"
@@ -12,28 +18,31 @@ showrate()
   rate="$dollars.${cents:-00}"
 }
 
+#include exchangerate file
 exchratefile="/tmp/.exchangerate"
-scriptbc="scriptbc -p 30"  # tweak this setting as needed
+#scriptbc format
+scriptbc="scriptbc -p 30"  
 
 . $exchratefile
 
-# The 0.0000000001 compensates for a rounding error bug in 
-# many versions of bc, where 1 != 0.99999999999999
-
+# added long decimal for rounding bug
  useuro="$($scriptbc 1 / $euro    + 0.000000001)"
  uscand="$($scriptbc 1 / $canada  + 0.000000001)"
   usyen="$($scriptbc 1 / $japan   + 0.000000001)"
 uspound="$($scriptbc 1 / $uk      + 0.000000001)"
 
+#Setup currency use
 if [ $# -ne 2 ] ; then
   echo "Usage: $(basename $0) amount currency"
   echo "Where currency can be USD, Euro, Canadian, Yen, or Pound."
   exit 0
 fi
 
+#base amount, one dolloar
 amount=$1
 currency="$(echo $2 | tr '[:upper:]' '[:lower:]' | cut -c1-2)"
 
+#calculate currency
 case $currency in
   us|do ) if [ -z "$(echo $1 | grep '\.')" ] ; then
 	    masterrate="$1.00"
@@ -49,6 +58,7 @@ case $currency in
 	  exit 1
 esac
 
+#print currency
 echo "Currency Exchange Rate Equivalents for $1 ${2}:"
 showrate $masterrate
 echo "      US Dollars: $rate"
