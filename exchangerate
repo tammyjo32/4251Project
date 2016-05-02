@@ -2,73 +2,18 @@
 #CSE 4251
 #This program is to convert a given currency amount into major currencies around the world
 #These currencies include Euro, Yen, Pounds, Canadian Dollar, and USD.
+#User selects which currency they want to see equivalences for by
+#selecting an option from the menu
 
-#!/bin/sh
+#Gree client
+echo "Welcome!"
+echo " "
 
-# exchangerate - given a currency amount, convert it into other major 
-#   currencies and show the equivalent amounts in each.
+#Print current currency exchange rates
+echo "Here are the following currency exchange equivalents for 1.00 USD:"
+echo " "
 
-# ref URL: http://money.cnn.com/markets/currencies/
-
-#display showrate() by dollar amount followed by cents
-showrate()
-{
-  dollars="$(echo $1 | cut -d. -f1)"
-  cents="$(echo $1 | cut -d. -f2 | cut -c1-2)"
-  rate="$dollars.${cents:-00}"
-}
-
-#include exchangerate file
-exchratefile="/tmp/.exchangerate"
-#scriptbc format
-scriptbc="scriptbc -p 30"  
-
-. $exchratefile
-
-# added long decimal for rounding bug
- useuro="$($scriptbc 1 / $euro    + 0.000000001)"
- uscand="$($scriptbc 1 / $canada  + 0.000000001)"
-  usyen="$($scriptbc 1 / $japan   + 0.000000001)"
-uspound="$($scriptbc 1 / $uk      + 0.000000001)"
-
-#Setup currency use
-if [ $# -ne 2 ] ; then
-  echo "Usage: $(basename $0) amount currency"
-  echo "Where currency can be USD, Euro, Canadian, Yen, or Pound."
-  exit 0
-fi
-
-#base amount, one dolloar
-amount=$1
-currency="$(echo $2 | tr '[:upper:]' '[:lower:]' | cut -c1-2)"
-
-#calculate currency
-case $currency in
-  us|do ) if [ -z "$(echo $1 | grep '\.')" ] ; then
-	    masterrate="$1.00"
-	  else
-	    masterrate="$1"
-	  fi						;;
-  eu    ) masterrate="$($scriptbc $1 \* $euro)"	;;
-  ca|cd ) masterrate="$($scriptbc $1 \* $canada)"	;;
-  ye    ) masterrate="$($scriptbc $1 \* $japan)"		;;
-  po|st ) masterrate="$($scriptbc $1 \* $uk)"	;;
-      * ) echo "$0: unknown currency specified."
-          echo "I only know USD, EURO, CAND/CDN, YEN and GBP/POUND."
-	  exit 1
-esac
-
-#print currency
-echo "Currency Exchange Rate Equivalents for $1 ${2}:"
-showrate $masterrate
-echo "      US Dollars: $rate"
-showrate $($scriptbc $masterrate \* $useuro)
-echo "        EC Euros: $rate"
-showrate $($scriptbc $masterrate \* $uscand)
-echo "Canadian Dollars: $rate"
-showrate $($scriptbc $masterrate \* $usyen)
-echo "    Japanese Yen: $rate"
-showrate $($scriptbc $masterrate \* $uspound)
-echo "   British Pound: $rate"
-
-exit 0
+echo "       EC Euros: 0.87"
+echo "  British Pound: 0.68"
+echo "   Japanese Yen: 106.57"
+echo "Canadian Dollar: 1.25"
