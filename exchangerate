@@ -5,11 +5,11 @@
 #User selects which currency they want to see equivalences for by
 #selecting an option from the menu
 
-#Gree client
+# Greet client
 echo "Welcome!"
 echo " "
 
-#Print current currency exchange rates
+# Print out current currency exchange rates
 echo "Here are the following currency exchange equivalents for 1.00 USD:"
 echo " "
 
@@ -17,3 +17,161 @@ echo "       EC Euros: 0.87"
 echo "  British Pound: 0.68"
 echo "   Japanese Yen: 106.57"
 echo "Canadian Dollar: 1.25"
+echo " "
+
+# For looping back
+startover:
+
+# Print menu
+echo "Press 1 to get currency exchange equivalents for EC Euros."
+echo "Press 2 to get currency exhcange equivalents for British Pound."
+echo "Press 3 to get currency exchange equivalents for Japanese Yen."
+echo "Press 4 to get currency exchange equivalents for Canadian Dollar."
+echo "Press 5 to get currency exchange equivalents for US Dollar."
+echo "Press 6 to exit. "
+echo " "
+
+set option = $<
+
+# Euros
+if ($option == 1) then
+	echo "Select amount of Euros you would like to exchange (For example: If you wanted to see exchange equivalents to 250 Euros, you would simply enter 250):"
+	# Print equivalents
+	set euroAmnt = $<
+	echo "Currency Exchange Equivalents for $euroAmnt Euros:"
+	echo " "
+
+	echo "British Pound:"
+	echo "$euroAmnt * (0.785295)" | bc -l
+	echo " "
+
+	echo "Canadian Dollar:"
+	echo "$euroAmnt * (1.443874)" | bc -l
+	echo " "
+
+	echo "Japanese Yen:"
+	echo "$euroAmnt * (122.688954)" | bc -l
+	echo " "
+
+	echo "US Dollar:"
+	echo "$euroAmnt * (1.152532)" | bc -l
+	echo " "
+	goto startover
+
+endif
+
+# Pound equivalent
+if ($option == 2) then
+	echo "Select amount of Pounds you would like to exchange (For example: If you wanted to see exchange equivalents to 250 Pounds, you would simply enter 250):"
+	#print equivalences
+	set gbpAmnt = $<
+	echo "Currency Exchange Equivalents for $gbpAmnt Pounds:"
+	echo " "
+
+	echo "Canadian Dollar:"
+	echo "$gbpAmnt * (1.838936)" | bc -l
+	echo " "
+
+	echo "EC Euro:"
+	echo "$gbpAmnt * (1.273110)" | bc -l
+	echo " "
+
+	echo "Japanese Yen:"
+	echo "$gbpAmnt * (156.294801)" | bc -l
+	echo " "
+
+	echo "US Dollar:"
+	echo "$gbpAmnt * (1.468074)" | bc -l
+	echo " "
+	goto startover
+
+endif
+
+# Yen Equivalents
+if ($option == 3) then
+	echo "Select amount of Yens you would like to exchange (For example: If you wanted to see exchange equivalents to 250 Yens, you would simply enter 250):"
+	#print equivalences
+	set jpnAmnt = $<
+	echo "Currency Exchange Equivalents for $jpnAmnt Yens:"
+	echo " "
+
+	echo "British Pound:"
+	echo "$jpnAmnt * (0.006398)" | bc -l
+	echo " "
+
+	echo "Canadian Dollar:"
+	echo "$jpnAmnt * (0.011768)" | bc -l
+	echo " "
+
+	echo "EC Euro:"
+	echo "$jpnAmnt * (0.008148)" | bc -l
+	echo " "
+
+	echo "US Dollar:"
+	echo "$jpnAmnt * (0.0093696)" | bc -l
+	echo " "
+	goto startover
+
+endif
+
+# Canadian Equivalent
+if ($option == 4) then
+	echo "Select amount of Canadian Dollars you would like to exchange (For example: If you wanted to see exchange equivalents to 250 Dollars, you would simply enter 250):"
+	# Print equivalences
+	set cadAmnt = $<
+	echo "Currency Exchange Equivalents for $cadAmnt Dollars:"
+	echo " "
+
+	echo "British Pound:"
+	echo "$cadAmnt * (0.543890)" | bc -l
+	echo " "
+
+	echo "EC Euros:"
+	echo "$cadAmnt * (0.692445)" | bc -l
+	echo " "
+
+	echo "Japanese Yen:"
+	echo "$cadAmnt * (84.969783)" | bc -l
+	echo " "
+
+	echo "US Dollar:"
+	echo "$cadAmnt * (0.798476)" | bc -l
+	echo " "
+	goto startover
+
+endif
+
+# US Equivalent
+if ($option == 4) then
+	echo "Select amount of US Dollars you would like to exchange (For example: If you wanted to see exchange equivalents to 250 Dollars, you would simply enter 250):"
+	# Print Equivalences
+	set usAmnt = $<
+	echo "Currency Exchange Equivalents for $usAmnt Dollars:"
+	echo " "
+
+	echo "Canadian Dollar:"
+	echo "$usAmnt * (1.252425)" | bc -l
+	echo " "
+
+	echo "British Pound:"
+	echo "$usAmnt * (0.681203)" | bc -l
+	echo " "
+
+	echo "EC Euros:"
+	echo "$usAmnt * (0.867395)" | bc -l
+	echo " "
+
+	echo "Japanese Yen:"
+	echo "$usAmnt * (106.412489)" | bc -l
+	echo " "
+
+	goto startover
+
+endif
+
+#Quit
+if (option == 6) then
+	echo "Exiting program. Goodbye!"
+	exit
+endif
+
